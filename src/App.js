@@ -1,3 +1,11 @@
-export default function Congratulations() {
-  return <h1>Good job!</h1>;
+import Gallery from "./Gallery.js";
+import { Profile } from "./Profile.js";
+
+export default function App() {
+  return (
+    <div>
+      <Profile />
+      <Gallery />
+    </div>
+  );
 }
