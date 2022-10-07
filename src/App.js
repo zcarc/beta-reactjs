@@ -1,25 +1,31 @@
-import { getImageUrl } from "./utils";
-
-const person = {
-  name: "Gregorio Y. Zara",
-  imageId: "7vQD0fP",
-  imageSize: "s",
-  theme: {
-    backgroundColor: "black",
-    color: "pink",
-  },
-};
-
-export default function TodoList() {
+function Card({ children }) {
   return (
-    <div style={person.theme}>
-      <h1>{person.name}'s Todos</h1>
-      <img className="avatar" src={getImageUrl(person)} alt={person.name} />
-      <ul>
-        <li>Improve the videophone</li>
-        <li>Prepare aeronautics lectures</li>
-        <li>Work on the alcohol-fuelled engine</li>
-      </ul>
+    <div className="card">
+      <div className="card-content">{children}</div>
+    </div>
+  );
+}
+
+export default function Profile() {
+  return (
+    <div>
+      <Card>
+        <h1>Photo</h1>
+        <img
+          className="avatar"
+          src="https://i.imgur.com/OKS67lhm.jpg"
+          alt="Aklilu Lemma"
+          width={70}
+          height={70}
+        />
+      </Card>
+      <Card>
+        <h1>About</h1>
+        <p>
+          Aklilu Lemma was a distinguished Ethiopian scientist who discovered a
+          natural treatment to schistosomiasis.
+        </p>
+      </Card>
     </div>
   );
 }
