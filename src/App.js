@@ -1,31 +1,34 @@
-function Card({ children }) {
+function Item({ name, importance }) {
   return (
-    <div className="card">
-      <div className="card-content">{children}</div>
-    </div>
+    <li className="item">
+      {name}
+      {/* case 1 */}
+      {importance > 0 && " "}
+      {importance > 0 && <i>Importance: {importance}</i>}
+
+      {/* case 2 */}
+      {/* {importance > 0 && <i> Importance: {importance}</i>} */}
+
+      {/* case 3 */}
+      {/* {importance > 0 && (
+        <>
+          {" "}
+          <i>Importance: {importance}</i>
+        </>
+      )} */}
+    </li>
   );
 }
 
-export default function Profile() {
+export default function PackingList() {
   return (
-    <div>
-      <Card>
-        <h1>Photo</h1>
-        <img
-          className="avatar"
-          src="https://i.imgur.com/OKS67lhm.jpg"
-          alt="Aklilu Lemma"
-          width={70}
-          height={70}
-        />
-      </Card>
-      <Card>
-        <h1>About</h1>
-        <p>
-          Aklilu Lemma was a distinguished Ethiopian scientist who discovered a
-          natural treatment to schistosomiasis.
-        </p>
-      </Card>
-    </div>
+    <section>
+      <h1>Sally Ride's Packing List</h1>
+      <ul>
+        <Item importance={9} name="Space suit" />
+        <Item importance={0} name="Helmet with a golden leaf" />
+        <Item importance={6} name="Photo of Tam" />
+      </ul>
+    </section>
   );
 }
