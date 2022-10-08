@@ -1,42 +1,31 @@
-import { useState, useEffect } from "react";
-import StoryTray from "./StoryTray.js";
-
-let initialStories = [
-  { id: 0, label: "Ankit's Story" },
-  { id: 1, label: "Taylor's Story" },
-];
+import { useState } from "react";
+import ColorSwitch from "./ColorSwitch.js";
 
 export default function App() {
-  let [stories, setStories] = useState([...initialStories]);
-  let time = useTime();
+  const [clicks, setClicks] = useState(0);
 
-  // HACK: Prevent the memory from growing forever while you read docs.
-  // We're breaking our own rules here.
-  if (stories.length > 100) {
-    stories.length = 100;
+  function handleClickOutside() {
+    setClicks((c) => c + 1);
+  }
+
+  function getRandomLightColor() {
+    let r = 150 + Math.round(100 * Math.random());
+    let g = 150 + Math.round(100 * Math.random());
+    let b = 150 + Math.round(100 * Math.random());
+    return `rgb(${r}, ${g}, ${b})`;
+  }
+
+  function handleChangeColor() {
+    let bodyStyle = document.body.style;
+    bodyStyle.backgroundColor = getRandomLightColor();
   }
 
   return (
-    <div
-      style={{
-        width: "100%",
-        height: "100%",
-        textAlign: "center",
-      }}
-    >
-      <h2>It is {time.toLocaleTimeString()} now.</h2>
-      <StoryTray stories={stories} />
+    <div style={{ width: "100%", height: "100%" }} onClick={handleClickOutside}>
+      <ColorSwitch onChangeColor={handleChangeColor} />
+      <br />
+      <br />
+      <h2>Clicks on the page: {clicks}</h2>
     </div>
   );
-}
-
-function useTime() {
-  const [time, setTime] = useState(() => new Date());
-  useEffect(() => {
-    const id = setInterval(() => {
-      setTime(new Date());
-    }, 1000);
-    return () => clearInterval(id);
-  }, []);
-  return time;
 }
