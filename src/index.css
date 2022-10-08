@@ -46,15 +46,18 @@ ul {
   padding-left: 20px;
 }
 
-body {
-  text-align: center;
+ul {
+  margin: 0;
+  list-style-type: none;
 }
-p {
-  font-family: Georgia, serif;
-  font-size: 20px;
-  font-style: italic;
-}
-hr {
-  margin: 0 120px 0 120px;
-  border: 1px dashed #45c3d8;
+
+li {
+  border: 1px solid #aaa;
+  border-radius: 6px;
+  float: left;
+  margin: 5px;
+  margin-bottom: 20px;
+  padding: 5px;
+  width: 70px;
+  height: 100px;
 }
