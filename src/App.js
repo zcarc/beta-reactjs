@@ -1,18 +1,23 @@
-import { useState, useEffect } from "react";
-import Clock from "./Clock.js";
+import { useState } from "react";
 
-function useTime() {
-  const [time, setTime] = useState(() => new Date());
-  useEffect(() => {
-    const id = setInterval(() => {
-      setTime(new Date());
-    }, 1000);
-    return () => clearInterval(id);
-  }, []);
-  return time;
-}
+export default function TrafficLight() {
+  const [walk, setWalk] = useState(true);
 
-export default function App() {
-  const time = useTime();
-  return <Clock time={time.toLocaleTimeString()} />;
+  function handleClick() {
+    setWalk(!walk);
+    alert(walk ? "Stop is next" : "Walk is next");
+  }
+
+  return (
+    <>
+      <button onClick={handleClick}>Change to {walk ? "Stop" : "Walk"}</button>
+      <h1
+        style={{
+          color: walk ? "darkgreen" : "darkred",
+        }}
+      >
+        {walk ? "Walk" : "Stop"}
+      </h1>
+    </>
+  );
 }
