@@ -25,12 +25,31 @@ export default function ShoppingCart() {
     setProducts(
       products.map((product) => {
         if (product.id === productId) {
-          return { ...product, count: product.count + 1 };
+          return {
+            ...product,
+            count: product.count + 1,
+          };
         } else {
           return product;
         }
       })
     );
+  }
+
+  function handleDecreaseClick(productId) {
+    let nextProducts = products.map((product) => {
+      if (product.id === productId) {
+        return {
+          ...product,
+          count: product.count - 1,
+        };
+      } else {
+        return product;
+      }
+    });
+
+    nextProducts = nextProducts.filter((p) => p.count > 0);
+    setProducts(nextProducts);
   }
 
   return (
@@ -44,6 +63,13 @@ export default function ShoppingCart() {
             }}
           >
             +
+          </button>
+          <button
+            onClick={() => {
+              handleDecreaseClick(product.id);
+            }}
+          >
+            –
           </button>
         </li>
       ))}
