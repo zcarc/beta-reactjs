@@ -1,46 +1,27 @@
-import { useImmer } from "use-immer";
-import AddTodo from "./AddTodo.js";
-import TaskList from "./TaskList.js";
+import { useState } from "react";
 
-let nextId = 3;
-const initialTodos = [
-  { id: 0, title: "Buy milk", done: true },
-  { id: 1, title: "Eat tacos", done: false },
-  { id: 2, title: "Brew tea", done: false },
-];
+export default function Picture() {
+  const [isActive, setIsActive] = useState(false);
 
-export default function TaskApp() {
-  const [todos, updateTodos] = useImmer(initialTodos);
-
-  function handleAddTodo(title) {
-    updateTodos((draft) => {
-      draft.push({ id: nextId++, title, done: false });
-    });
-  }
-
-  function handleChangeTodo(nextTodo) {
-    updateTodos((draft) => {
-      const todo = draft.find((t) => t.id === nextTodo.id);
-      todo.title = nextTodo.title;
-      todo.done = nextTodo.done;
-    });
-  }
-
-  function handleDeleteTodo(todoId) {
-    updateTodos((draft) => {
-      const index = draft.findIndex((t) => t.id === todoId);
-      draft.splice(index, 1);
-    });
+  let backgroundClassName = "background";
+  let pictureClassName = "picture";
+  if (isActive) {
+    pictureClassName += " picture--active";
+  } else {
+    backgroundClassName += " background--active";
   }
 
   return (
-    <>
-      <AddTodo onAddTodo={handleAddTodo} />
-      <TaskList
-        todos={todos}
-        onChangeTodo={handleChangeTodo}
-        onDeleteTodo={handleDeleteTodo}
+    <div className={backgroundClassName} onClick={() => setIsActive(false)}>
+      <img
+        className={pictureClassName}
+        alt="Rainbow houses in Kampung Pelangi, Indonesia"
+        src="https://i.imgur.com/5qwVYb1.jpeg"
+        onClick={(e) => {
+          e.stopPropagation();
+          setIsActive(true);
+        }}
       />
-    </>
+    </div>
   );
 }
