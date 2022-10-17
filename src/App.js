@@ -3,31 +3,29 @@ import { letters } from "./data.js";
 import Letter from "./Letter.js";
 
 export default function MailClient() {
-  const [letterList, setLetterList] = useState(letters);
+  const [selectedIds, setSelectedIds] = useState([]);
 
-  const selectedCount = letterList.filter((l) => l.isSelected).length;
+  const selectedCount = selectedIds.length;
 
   function handleToggle(toggledId) {
-    setLetterList(
-      letterList.map((l) => {
-        if (l.id === toggledId) {
-          return { ...l, isSelected: !l.isSelected };
-        } else {
-          return l;
-        }
-      })
-    );
+    // 기존에 선택되었다면 선택 해제
+    if (selectedIds.includes(toggledId)) {
+      setSelectedIds(selectedIds.filter((id) => id !== toggledId));
+    } else {
+      // 선택이 안되었다면 선택 체크
+      setSelectedIds([...selectedIds, toggledId]);
+    }
   }
 
   return (
     <>
       <h2>Inbox</h2>
       <ul>
-        {letterList.map((letter) => (
+        {letters.map((letter) => (
           <Letter
             key={letter.id}
             letter={letter}
-            isSelected={letter.isSelected}
+            isSelected={selectedIds.includes(letter.id)}
             onToggle={handleToggle}
           />
         ))}
