@@ -1,17 +1,17 @@
-export const initialLetters = [
+export const letters = [
   {
     id: 0,
     subject: "Ready for adventure?",
-    isStarred: true,
+    isSelected: false,
   },
   {
     id: 1,
     subject: "Time to check in!",
-    isStarred: false,
+    isSelected: false,
   },
   {
     id: 2,
     subject: "Festival Begins in Just SEVEN Days!",
-    isStarred: false,
+    isSelected: false,
   },
 ];
