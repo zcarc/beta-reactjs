@@ -12,13 +12,12 @@ export default function Chat({ contact, message, dispatch }) {
         }}
       />
       <br />
-      {/* The resulting behavior is the same.
-      But keep in mind that action types should ideally describe “what the user did” rather than “how you want the state to change”.
-      This makes it easier to later add more features. */}
       <button
         onClick={() => {
-          alert(`Sending ${message} to ${contact.email}`);
-          dispatch({ type: "sent_message" });
+          alert(`Sending "${message}" to ${contact.email}`);
+          dispatch({
+            type: "sent_message",
+          });
         }}
       >
         Send to {contact.email}
