@@ -46,19 +46,22 @@ ul {
   padding-left: 20px;
 }
 
-ul, li {
+.chat,
+.contact-list {
+  float: left;
+  margin-bottom: 20px;
+}
+ul,
+li {
   list-style: none;
   margin: 0;
   padding: 0;
 }
-li {
-  margin-bottom: 20px;
-}
-label {
-  display: block;
-  margin: 10px 0;
-}
-button {
+li button {
+  width: 100px;
+  padding: 10px;
   margin-right: 10px;
-  margin-bottom: 10px;
+}
+textarea {
+  height: 150px;
 }
