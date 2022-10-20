@@ -1,58 +1,78 @@
-import { useContext, useState } from "react";
-import { ImageSizeContext } from "./Context.js";
-import { places } from "./data.js";
-import { getImageUrl } from "./utils.js";
+import { useReducer } from "react";
+import AddTask from "./AddTask.js";
+import TaskList from "./TaskList.js";
 
-export default function App() {
-  const [isLarge, setIsLarge] = useState(false);
-  const imageSize = isLarge ? 150 : 100;
-  return (
-    <ImageSizeContext.Provider value={imageSize}>
-      <label>
-        <input
-          type="checkbox"
-          checked={isLarge}
-          onChange={(e) => {
-            setIsLarge(e.target.checked);
-          }}
-        />
-        Use large images
-      </label>
-      <hr />
-      <List />
-    </ImageSizeContext.Provider>
-  );
-}
+export default function TaskApp() {
+  const [tasks, dispatch] = useReducer(tasksReducer, initialTasks);
 
-function List() {
-  const listItems = places.map((place) => (
-    <li key={place.id}>
-      <Place place={place} />
-    </li>
-  ));
-  return <ul>{listItems}</ul>;
-}
+  function handleAddTask(text) {
+    dispatch({
+      type: "added",
+      id: nextId++,
+      text: text,
+    });
+  }
 
-function Place({ place }) {
+  function handleChangeTask(task) {
+    dispatch({
+      type: "changed",
+      task: task,
+    });
+  }
+
+  function handleDeleteTask(taskId) {
+    dispatch({
+      type: "deleted",
+      id: taskId,
+    });
+  }
+
   return (
     <>
-      <PlaceImage place={place} />
-      <p>
-        <b>{place.name}</b>
-        {": " + place.description}
-      </p>
+      <h1>Day off in Kyoto</h1>
+      <AddTask onAddTask={handleAddTask} />
+      <TaskList
+        tasks={tasks}
+        onChangeTask={handleChangeTask}
+        onDeleteTask={handleDeleteTask}
+      />
     </>
   );
 }
 
-function PlaceImage({ place }) {
-  const imageSize = useContext(ImageSizeContext);
-  return (
-    <img
-      src={getImageUrl(place)}
-      alt={place.name}
-      width={imageSize}
-      height={imageSize}
-    />
-  );
+function tasksReducer(tasks, action) {
+  switch (action.type) {
+    case "added": {
+      return [
+        ...tasks,
+        {
+          id: action.id,
+          text: action.text,
+          done: false,
+        },
+      ];
+    }
+    case "changed": {
+      return tasks.map((t) => {
+        if (t.id === action.task.id) {
+          return action.task;
+        } else {
+          return t;
+        }
+      });
+    }
+    case "deleted": {
+      return tasks.filter((t) => t.id !== action.id);
+    }
+    default: {
+      throw Error("Unknown action: " + action.type);
+    }
+  }
 }
+
+let nextId = 3;
+const initialTasks = [
+  { id: 0, text: "Philosopher’s Path", done: true },
+  { id: 1, text: "Visit the temple", done: false },
+  { id: 2, text: "Drink matcha", done: false },
+];
